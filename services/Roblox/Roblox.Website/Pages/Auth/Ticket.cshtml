@@ -1,33 +1,38 @@
-@page "/auth/ticket"
+@page
 @model Roblox.Website.Pages.Auth.Ticket
 
-@{
-    Layout = "Shared/_Layout";
+@section MetaTags {
+    <title>Support Ticket – Shklurb</title>
 }
 
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-12 col-lg-6 offset-lg-3">
-            <div class="card card-body">
-                <h3>Support Ticket</h3>
-                <p>Fill out the form below to open a support ticket. After completing the form, you will be given a URL to view the status of your ticket.</p>
-                @if (Model.errorMessage != null)
-                {
-                    <p class="text-danger">@Model.errorMessage</p>
-                }
-                <div class="mt-4">
-                    <form method="post">
-                        <input type="hidden" name="action" value="SubmitNewTicket" />
-                        <input maxlength="100" type="text" name="subject" class="form-control" placeholder="Subject" />
-                        <textarea maxlength="1000" name="body" rows="8" class="form-control w-100 mt-2" placeholder="Ticket body. Include details that may be relevant, such as your account username, your browser, specific URLs, etc."></textarea>
-                        <div class="h-captcha mt-4 mb-2" data-sitekey="@Model.siteKey" data-theme="light"></div>
-                        @Html.AntiForgeryToken()
-                        <input class="btn btn-primary" type="submit" value="Submit" id="login-submit"/>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Segoe+UI:700,400|Tahoma:700,400');
+    body { background: linear-gradient(135deg, #e2f0ff 0%, #7ad0ff 100%); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+    .aero-logo { margin: 44px auto 10px auto; display: block; width: 220px; max-width: 80vw; filter: drop-shadow(0 8px 20px #8de8ff99); border-radius: 26px;}
+    .main-aero-card { background: linear-gradient(120deg, #f7fdff 60%, #8feeff30 100%); border-radius: 30px; box-shadow: 0 10px 60px #6fc6fc29, 0 2px 8px #7cdeff30; padding: 36px 22px 30px 22px; max-width: 440px; width: 96vw; text-align: center; margin: 36px auto 30px auto;}
+    .main-aero-card h2 { font-size: 1.6em; color: #066bb8; margin-bottom: 10px;}
+    .main-aero-card p { color: #216ba0; font-size: 1.03em; margin-bottom: 18px;}
+    .aero-input, .aero-textarea { width: 90%; margin: 12px auto 16px auto; padding: 12px; border-radius: 18px; border: none; outline: none; font-size: 1em; box-shadow: 0 2px 16px #c9f6ff30; background: linear-gradient(100deg, #eafaff 80%, #c6f4ff 100%);}
+    .aero-textarea { resize: vertical; min-height: 64px; max-height: 260px;}
+    .aero-input:focus, .aero-textarea:focus { box-shadow: 0 4px 24px #30d1ff88;}
+    .cta-button { font-size: 1.13em; background: linear-gradient(90deg, #30d5fc 10%, #5ec5ff 100%); border: none; color: #fff; padding: 14px 40px; border-radius: 22px; font-weight: bold; box-shadow: 0 8px 36px #00bcf855, 0 0 0 4px #c2f2f3aa inset; cursor: pointer; letter-spacing: 0.04em; text-shadow: 0 2px 8px #fff9; margin-top: 14px; transition: background 0.22s, box-shadow 0.17s;}
+    .aero-error { color: #f2406e; background: #fff4f7; padding: 8px 18px; border-radius: 16px; margin-bottom: 16px; box-shadow: 0 2px 12px #ff95bc22; font-weight: bold;}
+</style>
 
-<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+<img class="aero-logo" src="/UnsecuredContent/shklurb-logo.png" alt="Shklurb Logo">
+
+<div class="main-aero-card">
+    <h2>Submit a Support Ticket</h2>
+    <p>If you have an issue, fill out the form below and our team will help ASAP.</p>
+    @if (Model.errorMessage != null)
+    {
+        <div class="aero-error">@Model.errorMessage</div>
+    }
+    <form method="post" autocomplete="off">
+        <input class="aero-input" type="text" name="subject" placeholder="Subject" maxlength="100" required value="@Model.subject" />
+        <textarea class="aero-textarea" name="body" placeholder="Describe your issue (10–1000 characters)" minlength="10" maxlength="1000" required>@Model.body</textarea>
+        <div class="h-captcha" data-sitekey="@Model.siteKey" style="margin:18px auto;"></div>
+        <button class="cta-button" type="submit">Submit Ticket</button>
+    </form>
+</div>
+<script src="https://hcaptcha.com/1/api.js" async defer></script>
