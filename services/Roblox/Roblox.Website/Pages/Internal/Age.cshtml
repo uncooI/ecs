@@ -1,41 +1,34 @@
-@page "/internal/age"
-@model Roblox.Website.Pages.Auth.Age
+@page
+@model Roblox.Website.Pages.Internal.Age
 
-@{
-    Layout = "Shared/_Layout";
+@section MetaTags {
+    <title>Set Age – Shklurb</title>
 }
 
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-12 col-lg-6 offset-lg-3">
-            <div class="card card-body">
-                <h2>18+ Certification</h2>
-                @if (true)
-                {
-                    <p>Age verification is being revamped to provide a safer experience for everyone. Check back soon.</p>
-                }
-                else
-                {
-                    @if (!Model.is18Plus)
-                    {
-                        <form method="post">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="true" name="ageconsent" id="age-consent">
-                                <label class="form-check-label" for="age-consent">
-                                    By checking this box and clicking submit, I certify that I am 18 years of age or older as of Today, @DateTime.UtcNow.ToString("f") UTC, I consent to viewing 18+ Material (including Games, Clothing, Hats, etc) present on the website, and that I understand I cannot revoke this cerification. If it is discovered you lied about your age, your account and any associated accounts will be deleted.
-                                </label>
-                            </div>
-                            @Html.AntiForgeryToken()
-                            <input type="submit" class="btn btn-primary mt-4" value="Submit"/>
-                        </form>
-                    }
-                    else
-                    {
-                        <p class="mt-4">Your account is marked as 18 or over. You now have access to assets marked as 18+. You cannot revoke this certification.</p>
-                        <a class="btn btn-primary" href="/home">Home</a>
-                    }
-                }
-            </div>
-        </div>
-    </div>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Segoe+UI:700,400|Tahoma:700,400');
+    body { background: linear-gradient(135deg, #e2f0ff 0%, #7ad0ff 100%); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+    .aero-logo { margin:36px auto 10px auto; display:block; width:180px; max-width:70vw; filter:drop-shadow(0 8px 12px #7ee8ff66); border-radius:16px;}
+    .main-aero-card { background:linear-gradient(120deg, #f7fdff 60%, #8feeff30 100%); border-radius:20px; box-shadow:0 10px 40px #6fc6fc29,0 2px 8px #7cdeff30; padding:28px 16px 18px 16px; max-width:450px; width:97vw; text-align:center; margin:22px auto 18px auto;}
+    .main-aero-card h2 { font-size:1.38em; color:#0a6fb9; margin-bottom:14px;}
+    .main-aero-card p { color:#246e9d; font-size:1.07em; margin-bottom:12px;}
+    .aero-input { width:90%; margin:12px auto 10px auto; padding:12px; border-radius:18px; border:none; outline:none; font-size:1em; box-shadow:0 2px 16px #a9e9ff30; background:linear-gradient(100deg,#eafaff 80%,#c6f4ff 100%);}
+    .aero-input:focus { box-shadow:0 4px 24px #30d1ff88;}
+    .cta-button { font-size:1.13em; background:linear-gradient(90deg,#30d5fc 10%,#5ec5ff 100%); border:none; color:#fff; padding:14px 40px; border-radius:22px; font-weight:bold; box-shadow:0 8px 36px #00bcf855,0 0 0 4px #c2f2f3aa inset; cursor:pointer; letter-spacing:0.04em; text-shadow:0 2px 8px #fff9; margin-top:14px; transition:background 0.22s, box-shadow 0.17s;}
+    .aero-success { color:#1f7c3a; background:#f2fff6; padding:8px 18px; border-radius:16px; margin-bottom:16px; box-shadow:0 2px 12px #85ffbc22; font-weight:bold;}
+</style>
+
+<img class="aero-logo" src="/UnsecuredContent/shklurb-logo.png" alt="Shklurb Logo">
+
+<div class="main-aero-card">
+    <h2>Set Your Age</h2>
+    <p>We use this only for safety checks and nothing else.</p>
+    @if (Model.successMessage != null)
+    {
+        <div class="aero-success">@Model.successMessage</div>
+    }
+    <form method="post" autocomplete="off">
+        <input class="aero-input" type="number" name="age" min="1" max="120" placeholder="Your Age" required value="@Model.age" />
+        <button class="cta-button" type="submit">Update Age</button>
+    </form>
 </div>
