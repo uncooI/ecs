@@ -1,65 +1,36 @@
-@page "/auth/tos"
-@model Roblox.Website.Pages.Auth.Privacy
-
-@{
-    Layout = "Shared/_Layout";
-}
+@page
+@model Roblox.Website.Pages.Auth.TOS
 
 @section MetaTags {
-    <title>Terms of Service</title>
+    <title>Terms of Service – Shklurb</title>
 }
 
-<div class="container">
-    <div class="row">
-        <div class="col-12 col-lg-6 offset-lg-3">
-            <h2 class="mt-4 mb-4">Terms of Service</h2>
-            <p>Last Updated June 29, 2022</p>
-            <p>This is essentially just a list of rules for our platform. We reserve the right to update this at any time without any notice, so check here frequently in case the terms are updated. For privacy information, <a href="/auth/privacy">click here</a>.</p>
-            <p>A violation of any of these rules could result in a temporary OR permanent ban. New accounts will usually be permanently banned on their first infraction, while older accounts might be given temporary bans (e.g. 1 day or 1 week) depending on the severity.</p>
-            <p class="mb-0 fw-bolder">Text Guidelines</p>
-            <p>These apply to all text inputs on the site, such as forum posts and in-game chat.</p>
-            <ul>
-                <li>
-                    <span class="fw-bolder">Do not discriminate or harass people.</span> Light swearing is OK, but don't use slurs as an insult.
-                </li>
-                <li>
-                    <span class="fw-bolder">Do not reveal personal information pertaining to yourself or others.</span>
-                </li>
-                <li>
-                    <span class="fw-bolder">Try not to start drama.</span> For example, do not create posts "exposing" someone. If you are concerned about a user, you should send a message to a moderator.
-                </li>
-                <li>
-                    <span class="fw-bolder">Do not excessively advertise websites, YouTube channels, Twitter accounts, or other off-platform URLs.</span> You can mention stuff like "Hey, I own example.com", but if you start spamming "join my site" or "subscribe to my YouTube channel", you're going to be banned.
-                </li>
-            </ul>
-            <p class="mt-4 mb-0 fw-bolder">Image Guidelines</p>
-            <p>As well as the above text guidelines, these guidelines apply to images uploaded to the site:</p>
-            <ul>
-                <li>
-                    <span class="fw-bolder">Do not upload violent content.</span> Examples include gore, violent scenes from movies, etc.
-                </li>
-                <li>
-                    <span class="fw-bolder">Do not upload content with real people.</span> Exceptions will be made for celebrities if it's obvious who they are.
-                </li>
-                <li>
-                    <span class="fw-bolder">Do not upload pornographic content featuring underage characters.</span> Even if the character is officially a 500 year old vampire, if it looks underage, you shouldn't upload it.
-                </li>
-            </ul>
-            <p class="mt-4 mb-0 fw-bolder">Other Notes</p>
-            <ul>
-                <li>
-                    <span class="fw-bolder">You are responsible for invited users.</span> For example, if you invite someone who starts spamming racial slurs on the forums, your account could get banned. You should only invite people you trust.
-                </li>
-                <li>
-                    <span class="fw-bolder">You are responsible for the security of your account.</span> Password resets are done on a case-by-case basis, depending on if you can verify that you actually owned the account. Pick a strong password - if you forget it or someone guesses it, you may permanently lose access to your account.
-                </li>
-                <li>
-                    <span class="fw-bolder">A few alternate accounts is OK.</span> You can create an alt by creating an invite and joining using the invite URL. Do not create alt accounts with the application system.
-                </li>
-                <li>
-                    <span class="fw-bolder">Do not use the advertising system for advertising URLs that are not relevant to this website.</span> For example, discord servers pertaining to this website (or old Roblox in general) would be ok. A URL pointing to an unknown website (such as "my-revival.com"), your YouTube channel, your Twitch channel, etc, would not be allowed.
-                </li>
-            </ul>
-        </div>
-    </div>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Segoe+UI:700,400|Tahoma:700,400');
+    body { background: linear-gradient(135deg, #e2f0ff 0%, #7ad0ff 100%); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+    .aero-logo { margin: 36px auto 10px auto; display: block; width: 180px; max-width: 70vw; filter: drop-shadow(0 8px 12px #7ee8ff66); border-radius: 16px;}
+    .main-aero-card { background: linear-gradient(120deg, #f7fdff 60%, #8feeff30 100%); border-radius: 20px; box-shadow: 0 10px 40px #6fc6fc29, 0 2px 8px #7cdeff30; padding: 30px 16px 22px 16px; max-width: 650px; width: 97vw; text-align: left; margin: 24px auto 18px auto;}
+    .main-aero-card h2 { font-size: 1.7em; color: #066bb8; margin-bottom: 10px;}
+    .main-aero-card p, .main-aero-card li { color: #216ba0; font-size: 1.03em; }
+    .main-aero-card ul { padding-left: 24px; }
+</style>
+
+<img class="aero-logo" src="/UnsecuredContent/shklurb-logo.png" alt="Shklurb Logo">
+<div class="main-aero-card">
+    <h2>Terms of Service</h2>
+    <p>
+        By using Shklurb, you agree to the following rules.  
+        Be chill, don’t spam, and don’t abuse the platform or other users.<br>
+        <br>
+        <b>Key points:</b>
+    </p>
+    <ul>
+        <li>No harassment, hate speech, or illegal activity.</li>
+        <li>No spamming or flooding chat, forums, or games.</li>
+        <li>Do not exploit bugs, vulnerabilities, or attempt to hack the service.</li>
+        <li>Respect staff and other users at all times.</li>
+        <li>Any violation can result in account termination.</li>
+    </ul>
+    <p style="margin-top:20px;">Full legal policy coming soon.<br>
+    Questions? <a href="/contact" style="color:#138adc">Contact us.</a></p>
 </div>
