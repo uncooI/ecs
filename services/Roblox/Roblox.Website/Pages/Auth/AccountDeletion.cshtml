@@ -1,35 +1,42 @@
-@page "/auth/account-deletion"
+@page
 @model Roblox.Website.Pages.Auth.AccountDeletion
 
-@{
-    Layout = "Shared/_Layout";
+@section MetaTags {
+    <title>Delete Account – Shklurb</title>
 }
-<div class="container mt-4">
-    <div class="row mb-4">
-        <div class="col-12 col-md-6 offset-md-3">
-            <div class="card card-body">
-                <h3>Account Deletion</h3>
-                <p>To delete your account, enter your credentials below. You must be offline for at least 1 week before you can delete your account.</p>
 
-                <p><span class="text-danger">There is no way to undo an account deletion.</span> Your account and all its information (such as items and creations) will be permanently scrubbed from the website.</p>
-                @if (Model.successMessage != null)
-                {
-                    <p class="text-success">@Model.successMessage</p>
-                }
-                @if (Model.failureMessage != null)
-                {
-                    <p class="text-danger">@Model.failureMessage</p>
-                }
-                <form method="post">
-                    <input name="username" type="text" class="form-control" placeholder="Username"/>
-                    <input name="password" type="password" class="form-control mt-1" placeholder="Password"/>
-                    @Html.AntiForgeryToken()
-                    <div style="max-width: 200px;" class="mt-2">
-                        <input type="submit" class="form-control btn btn-danger" value="Delete Account"/>
-                    </div>
-                </form>
-                <p class="text-sm mt-4">If you do not remember your username or password, you cannot delete your account - we'd have no way to verify you are the true account owner.</p>
-            </div>
-        </div>
-    </div>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Segoe+UI:700,400|Tahoma:700,400');
+    body { background: linear-gradient(135deg, #e2f0ff 0%, #7ad0ff 100%); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+    .aero-logo { margin: 38px auto 12px auto; display: block; width: 185px; max-width: 70vw; filter: drop-shadow(0 8px 12px #7ee8ff66); border-radius: 16px;}
+    .main-aero-card { background: linear-gradient(120deg, #f7fdff 60%, #8feeff30 100%); border-radius: 20px; box-shadow: 0 10px 40px #6fc6fc29, 0 2px 8px #7cdeff30; padding: 30px 16px 22px 16px; max-width: 450px; width: 97vw; text-align: center; margin: 24px auto 18px auto;}
+    .main-aero-card h2 { font-size: 1.4em; color: #d3303a; margin-bottom: 14px;}
+    .main-aero-card p { color: #bb1833; font-size: 1.04em; margin-bottom: 18px;}
+    .cta-button { font-size: 1.11em; background: linear-gradient(90deg, #ef818f 10%, #f8b6bc 100%); border: none; color: #fff; padding: 12px 34px; border-radius: 20px; font-weight: bold; margin-top: 12px; cursor: pointer;}
+    .aero-error { color: #f2406e; background: #fff4f7; padding: 8px 18px; border-radius: 16px; margin-bottom: 16px; box-shadow: 0 2px 12px #ff95bc22; font-weight: bold;}
+    .aero-success { color: #1f7c3a; background: #f2fff6; padding: 8px 18px; border-radius: 16px; margin-bottom: 16px; box-shadow: 0 2px 12px #85ffbc22; font-weight: bold;}
+</style>
+
+<img class="aero-logo" src="/UnsecuredContent/shklurb-logo.png" alt="Shklurb Logo">
+
+<div class="main-aero-card">
+    <h2>Delete Your Account</h2>
+    <p>
+        Deleting your Shklurb account is permanent.<br>
+        All your data, purchases, and info will be removed forever.<br>
+        <br>
+        If you’re sure, confirm your password below to proceed.
+    </p>
+    @if (Model.errorMessage != null)
+    {
+        <div class="aero-error">@Model.errorMessage</div>
+    }
+    @if (Model.successMessage != null)
+    {
+        <div class="aero-success">@Model.successMessage</div>
+    }
+    <form method="post" autocomplete="off">
+        <input class="aero-input" type="password" name="password" placeholder="Confirm Password" maxlength="100" required />
+        <button class="cta-button" type="submit">Delete Account</button>
+    </form>
 </div>
