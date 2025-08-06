@@ -1,54 +1,40 @@
-@page "/internal/create-place"
+@page
 @model Roblox.Website.Pages.Internal.CreatePlace
 
-
-@{
-    Layout = "Shared/_Layout";
+@section MetaTags {
+    <title>Create Place – Shklurb</title>
 }
 
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-12 col-lg-6 offset-lg-3">
-            <h3>Create a Place</h3>
-            @if (Model.successUrl != null)
-            {
-                <p class="mt-4 mb-4"><span class="text-success">Place created successfully.</span> To upload your game, click <a href="@Model.successUrl">here</a>. You should bookmark the upload URL since it is not visible elsewhere.</p>
-            }else if (Model.errorMessage != null)
-            {
-                <p class="mt-4 mb-4">
-                    <span class="text-danger">
-                        @Model.errorMessage
-                    </span>
-                </p>
-            }
-            <p>Due to the cost associated with creating each place (in server hours, disk space, place conversion, etc), place creation is limited to specific users. The requirements for your account are listed below:</p>
-            <ul>
-                <li>
-                    Your account must be at least 1 week old, and must have signed up through an application (NOT through an invite).
-                </li>
-                <li>
-                    Your account must have some activity: at least a few friends, a customized avatar, time spent playing games, etc. The specific ways we define activity are not going to be listed here, as doing so would make it easy to abuse the place creation system.
-                </li>
-            </ul>
-            <p>In addition, you should also meet these requirements (although we don't check for them, and they aren't a necessity):</p>
-            <ul>
-                <li>
-                    You should have a computer with access to Roblox studio. We do not publish our own version of Studio, so you will have to use Roblox's regular studio.
-                </li>
-                <li>
-                    You should have some experience creating Roblox games. You might run into issues like a specific lua API not working the same on our site as it does on Roblox, which would require either changes to code or removal of certain features (for example, I had to remove the data store save system in Roblox High School and replace it with an in-memory store).
-                </li>
-                <li>
-                    You should understand that everything here is still experimental. A lot of APIs, such as DataStoreService and HttpService, do not work or are not available.
-                </li>
-            </ul>
-            <div class="mt-4">
-                <p>To actually create a place, click the button below. If your account is not eligible, you will be given an error message detailing the problem.</p>
-                <form method="post">
-                    @Html.AntiForgeryToken()
-                    <input type="submit" class="btn btn-primary" value="Create Place"/>
-                </form>
-            </div>
-        </div>
-    </div>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Segoe+UI:700,400|Tahoma:700,400');
+    body { background: linear-gradient(135deg, #e2f0ff 0%, #7ad0ff 100%); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+    .aero-logo { margin:36px auto 10px auto; display:block; width:180px; max-width:70vw; filter:drop-shadow(0 8px 12px #7ee8ff66); border-radius:16px;}
+    .main-aero-card { background:linear-gradient(120deg, #f7fdff 60%, #8feeff30 100%); border-radius:20px; box-shadow:0 10px 40px #6fc6fc29,0 2px 8px #7cdeff30; padding:28px 16px 18px 16px; max-width:450px; width:97vw; text-align:center; margin:22px auto 18px auto;}
+    .main-aero-card h2 { font-size:1.38em; color:#0a6fb9; margin-bottom:14px;}
+    .main-aero-card p { color:#246e9d; font-size:1.07em; margin-bottom:12px;}
+    .aero-input { width:90%; margin:12px auto 10px auto; padding:12px; border-radius:18px; border:none; outline:none; font-size:1em; box-shadow:0 2px 16px #a9e9ff30; background:linear-gradient(100deg,#eafaff 80%,#c6f4ff 100%);}
+    .aero-input:focus { box-shadow:0 4px 24px #30d1ff88;}
+    .cta-button { font-size:1.13em; background:linear-gradient(90deg,#30d5fc 10%,#5ec5ff 100%); border:none; color:#fff; padding:14px 40px; border-radius:22px; font-weight:bold; box-shadow:0 8px 36px #00bcf855,0 0 0 4px #c2f2f3aa inset; cursor:pointer; letter-spacing:0.04em; text-shadow:0 2px 8px #fff9; margin-top:14px; transition:background 0.22s, box-shadow 0.17s;}
+    .aero-error { color:#f2406e; background:#fff4f7; padding:8px 18px; border-radius:16px; margin-bottom:16px; box-shadow:0 2px 12px #ff95bc22; font-weight:bold;}
+    .aero-success { color:#1f7c3a; background:#f2fff6; padding:8px 18px; border-radius:16px; margin-bottom:16px; box-shadow:0 2px 12px #85ffbc22; font-weight:bold;}
+</style>
+
+<img class="aero-logo" src="/UnsecuredContent/shklurb-logo.png" alt="Shklurb Logo">
+
+<div class="main-aero-card">
+    <h2>Create a New Place</h2>
+    <p>Fill out the info below to create your game place.</p>
+    @if (Model.errorMessage != null)
+    {
+        <div class="aero-error">@Model.errorMessage</div>
+    }
+    @if (Model.successMessage != null)
+    {
+        <div class="aero-success">@Model.successMessage</div>
+    }
+    <form method="post" autocomplete="off">
+        <input class="aero-input" type="text" name="placeName" placeholder="Place Name" maxlength="64" required value="@Model.placeName" />
+        <textarea class="aero-input" name="description" placeholder="Description" maxlength="256">@Model.description</textarea>
+        <button class="cta-button" type="submit">Create Place</button>
+    </form>
 </div>
