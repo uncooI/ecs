@@ -1,31 +1,34 @@
-@page "/auth/application-check"
+@page
 @model Roblox.Website.Pages.Auth.ApplicationCheck
 
-@{
-    Layout = "Shared/_Layout";
-}
-
 @section MetaTags {
-    <title>Application Lookup</title>
+    <title>Check Application Status – Shklurb</title>
 }
 
-<div class="container mt-4 mb-4">
-    <div class="row">
-        <div class="col-12 col-lg-6 offset-lg-3">
-            <div class="card card-body">
-                <h3>View Application Status</h3>
-                <p>If you filled out your application on another browser/computer (or cleared your site data), you can manually paste in your application ID to view its status. If you did not save your application ID, you will have to submit a new application.</p>
-                @if (Model.errorMessage != null)
-                {
-                    <p class="text-danger">@Model.errorMessage</p>
-                }
-                <br />
-                <form method="post">
-                    <input name="applicationId" type="text" class="form-control" placeholder="Application ID" maxlength="128" />
-                    @Html.AntiForgeryToken()
-                    <input type="submit" class="mt-4 btn btn-primary" value="Submit" />
-                </form>
-            </div>
-        </div>
-    </div>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Segoe+UI:700,400|Tahoma:700,400');
+    body { background: linear-gradient(135deg, #e2f0ff 0%, #7ad0ff 100%); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+    .aero-logo { margin: 44px auto 18px auto; display: block; width: 260px; max-width: 80vw; filter: drop-shadow(0 8px 24px #87f2ffcc); border-radius: 28px; }
+    .main-aero-card { background: linear-gradient(120deg, #f7fdff 60%, #8feeff30 100%); border-radius: 30px; box-shadow: 0 10px 60px #6fc6fc29, 0 2px 8px #7cdeff30; padding: 38px 30px 32px 30px; max-width: 420px; width: 96vw; text-align: center; margin: 30px auto 32px auto;}
+    .main-aero-card h2 { font-size: 1.7em; color: #066bb8; margin-bottom: 10px; text-shadow: 0 2px 8px #e8fcff6b;}
+    .main-aero-card p { color: #186b91; font-size: 1.08em; margin-bottom: 16px;}
+    .aero-input { width: 88%; margin: 16px auto 14px auto; padding: 12px; border-radius: 18px; border: none; outline: none; font-size: 1em; box-shadow: 0 2px 14px #d8f9ff30; background: linear-gradient(100deg, #eafaff 80%, #c6f4ff 100%);}
+    .cta-button { font-size: 1.13em; background: linear-gradient(90deg, #30d5fc 10%, #5ec5ff 100%); border: none; color: #fff; padding: 12px 36px; border-radius: 20px; font-weight: bold; box-shadow: 0 8px 30px #00bcf855; cursor: pointer; letter-spacing: 0.04em; text-shadow: 0 2px 8px #fff9; margin-top: 10px;}
+    .aero-error { color: #f2406e; background: #fff4f7; padding: 8px 18px; border-radius: 16px; margin-bottom: 16px; box-shadow: 0 2px 12px #ff95bc22; font-weight: bold;}
+</style>
+
+<img class="aero-logo" src="/UnsecuredContent/shklurb-logo.png" alt="Shklurb Logo">
+
+<div class="main-aero-card">
+    <h2>Check Your Application</h2>
+    <p>Enter your application ID to view the status of your Shklurb application.</p>
+    @if (Model.errorMessage != null)
+    {
+        <div class="aero-error">@Model.errorMessage</div>
+    }
+    <form method="post" autocomplete="off">
+        <input class="aero-input" type="text" name="applicationId" placeholder="Enter your application ID" maxlength="128" required>
+        <button class="cta-button" type="submit">Check Status</button>
+    </form>
+    <p style="font-size:0.97em;color:#608fb2; margin-top: 18px;">Example format:<br><span style="font-family:monospace; color:#1686ce;">7006443b-549f-4688-8d8a-d5e8ddb7c173</span></p>
 </div>
