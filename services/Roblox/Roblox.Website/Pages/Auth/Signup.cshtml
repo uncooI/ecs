@@ -1,43 +1,36 @@
-@page "/auth/signup"
+@page
 @model Roblox.Website.Pages.Auth.Signup
 
-@{
-    Layout = "Shared/_Layout";
-    var htmlClassNames = "col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4";
+@section MetaTags {
+    <title>Signup – Shklurb</title>
 }
-<div class="container mt-4">
-    <div class="row">
-        <div class="@htmlClassNames">
-            <div class="card card-body">
-                <h2>Sign Up</h2>
-                @if (Model.applicationId != null && Model.invite == null)
-                {
-                    <p>If you already have an account you'd like to reactivate, you can <a href="/auth/login?applicationId=@Model.applicationId">login here</a>.</p>
-                }
-                @if (Model.invite != null)
-                {
-                    <p>You have been invited to this website by <span class="fw-bolder">@Model.inviterUsername</span>.</p>
-                    <p>To sign up, just enter a username and password.</p>
-                    {
-                        // Password notice only applies to invited users. Application users can recover through matrix account.
-                    }
-                    <p><span class="fw-bolder text-danger">IMPORTANT PASSWORD NOTICE:</span> You cannot recover your password if you forget it. You should use a password manager such as <a href="https://1password.com/" rel="nofollow noopener noreferrer" target="_blank">1Password</a> or <a href="https://bitwarden.com/" rel="nofollow noopener noreferrer" target="_blank">Bitwarden</a>.</p>
-                }
-                else
-                {
-                    <p>To sign up, just enter a username and password.</p>
-                }
-                @if (Model.errorMessage != null)
-                {
-                    <p class="text-danger">@Model.errorMessage</p>
-                }
-                <form method="post">
-                    <input disabled="@Model.signupDisabled" type="text" placeholder="Username" name="username" class="form-control mb-1"/>
-                    <input disabled="@Model.signupDisabled" type="password" placeholder="Password" name="password" class="form-control mb-1"/>
-                    @Html.AntiForgeryToken()
-                    <input disabled="@Model.signupDisabled" class="btn btn-primary mt-2" type="submit" value="Sign Up" id="signup-submit"/>
-                </form>
-            </div>
-        </div>
-    </div>
+
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Segoe+UI:700,400|Tahoma:700,400');
+    body { background: linear-gradient(135deg, #e2f0ff 0%, #7ad0ff 100%); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+    .aero-logo { margin: 44px auto 10px auto; display: block; width: 220px; max-width: 80vw; filter: drop-shadow(0 8px 20px #8de8ff99); border-radius: 26px;}
+    .main-aero-card { background: linear-gradient(120deg, #f7fdff 60%, #8feeff30 100%); border-radius: 30px; box-shadow: 0 10px 60px #6fc6fc29, 0 2px 8px #7cdeff30; padding: 36px 22px 30px 22px; max-width: 420px; width: 96vw; text-align: center; margin: 36px auto 30px auto;}
+    .main-aero-card h2 { font-size: 1.6em; color: #066bb8; margin-bottom: 10px;}
+    .main-aero-card p { color: #216ba0; font-size: 1.03em; margin-bottom: 16px;}
+    .aero-input { width: 90%; margin: 14px auto 12px auto; padding: 12px; border-radius: 18px; border: none; outline: none; font-size: 1em; box-shadow: 0 2px 16px #a9e9ff30; background: linear-gradient(100deg, #eafaff 80%, #c6f4ff 100%);}
+    .aero-input:focus { box-shadow: 0 4px 24px #30d1ff88;}
+    .cta-button { font-size: 1.13em; background: linear-gradient(90deg, #30d5fc 10%, #5ec5ff 100%); border: none; color: #fff; padding: 14px 40px; border-radius: 22px; font-weight: bold; box-shadow: 0 8px 36px #00bcf855, 0 0 0 4px #c2f2f3aa inset; cursor: pointer; letter-spacing: 0.04em; text-shadow: 0 2px 8px #fff9; margin-top: 14px; transition: background 0.22s, box-shadow 0.17s;}
+    .cta-button:disabled { background: #c2ebfd; color: #a5a5a5; cursor: not-allowed;}
+    .aero-error { color: #f2406e; background: #fff4f7; padding: 8px 18px; border-radius: 16px; margin-bottom: 16px; box-shadow: 0 2px 12px #ff95bc22; font-weight: bold;}
+</style>
+
+<img class="aero-logo" src="/UnsecuredContent/shklurb-logo.png" alt="Shklurb Logo">
+
+<div class="main-aero-card">
+    <h2>Sign Up for Shklurb</h2>
+    <p>Choose a username and password to create your account.</p>
+    @if (Model.errorMessage != null)
+    {
+        <div class="aero-error">@Model.errorMessage</div>
+    }
+    <form method="post" autocomplete="off">
+        <input class="aero-input" type="text" name="username" placeholder="Username" maxlength="21" required value="@Model.username" />
+        <input class="aero-input" type="password" name="password" placeholder="Password" maxlength="100" required />
+        <button class="cta-button" type="submit" @(Model.signupDisabled ? "disabled" : "")>Sign Up</button>
+    </form>
 </div>
