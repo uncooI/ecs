@@ -1,66 +1,44 @@
-@page "/internal/collectibles"
+@page
 @model Roblox.Website.Pages.Internal.CollectibleInventory
 
-@{
-    Layout = "Shared/_Layout";
+@section MetaTags {
+    <title>Collectible Inventory – Shklurb</title>
 }
 
-<div class="container mt-4 mb-4">
-    <div class="row">
-        <div class="col-12">
-            <div class="card card-body">
-                <!-- 
-                Please don't scrape this page. 
-                Use /apisite/inventory/v1/users/{userId}/assets/collectibles instead.
-                -->
-                @if (Model.errorMessage != null)
-                {
-                    <p class="text-danger mb-0">@Model.errorMessage</p>
-                }
-                else
-                {
-                    <h3>@Model.username</h3>
-                    <div class="row">
-                        <div class="col-12 col-lg-3">
-                            <img class="w-100 mx-auto" src="/thumbs/avatar.ashx?userId=@Model.userId"/>
-                            <p class="fw-bolder">Total RAP: @Model.totalRap.ToString("N0")</p>
-                        </div>
-                        <div class="col-12 col-lg-9">
-                            @if (Model.inventory.Count == 0)
-                            {
-                                <p class="text-center mt-4">Player does not have any collectible items.</p>
-                            }
-                            else
-                            {
-                                <div class="row">
-                                    @foreach (var item in Model.inventory)
-                                    {
-                                        <div class="col-6 col-md-4 col-lg-2 mb-2">
-                                            <div class="card">
-                                                <a href="/catalog/@item.assetId/--">
-                                                    <img class="w-100 mx-auto" src="/thumbs/asset.ashx?assetId=@item.assetId"/>
-                                                </a>
-                                                <div class="card-body">
-                                                    <p class="mb-0 fw-bolder text-truncate">@item.name</p>
-                                                    <p class="mb-0 text-truncate">RAP: @item.recentAveragePrice.ToString("N0")</p>
-                                                    @if (item.serialNumber != null)
-                                                    {
-                                                        <p class="mb-0 text-truncate">Serial: #@(item.serialNumber) of @(item.serialCount?.ToString() ?? "-")</p>
-                                                    }
-                                                    else
-                                                    {
-                                                        <p class="mb-0 text-truncate">UAID: @item.userAssetId</p>
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                            }
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Segoe+UI:700,400|Tahoma:700,400');
+    body { background: linear-gradient(135deg, #e2f0ff 0%, #7ad0ff 100%); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+    .aero-logo { margin:36px auto 10px auto; display:block; width:180px; max-width:70vw; filter:drop-shadow(0 8px 12px #7ee8ff66); border-radius:16px;}
+    .main-aero-card { background:linear-gradient(120deg, #f7fdff 60%, #8feeff30 100%); border-radius:20px; box-shadow:0 10px 40px #6fc6fc29,0 2px 8px #7cdeff30; padding:28px 18px 20px 18px; max-width:600px; width:97vw; text-align:center; margin:20px auto 16px auto;}
+    .main-aero-card h2 { font-size:1.35em; color:#066bb8; margin-bottom:14px;}
+    .main-aero-card p { color:#186b91; font-size:1.06em; margin-bottom:13px;}
+    .collectible-list { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; margin-top:20px;}
+    .collectible-card { background:linear-gradient(120deg, #e1f6ff 60%, #9befff30 100%); border-radius:16px; box-shadow:0 2px 12px #61d8ff20; padding:18px 12px 10px 12px; width:150px; min-height:120px; display:flex; flex-direction:column; align-items:center; }
+    .collectible-card img { max-width:70px; max-height:70px; border-radius:10px; margin-bottom:6px;}
+    .collectible-card .name { color:#037ae6; font-weight:bold; margin-bottom:2px;}
+    .collectible-card .desc { font-size:0.97em; color:#137bb8;}
+</style>
+
+<img class="aero-logo" src="/UnsecuredContent/shklurb-logo.png" alt="Shklurb Logo">
+
+<div class="main-aero-card">
+    <h2>Your Collectible Inventory</h2>
+    <p>See your limiteds and collectibles here.</p>
+    <div class="collectible-list">
+        @if (Model.Collectibles != null && Model.Collectibles.Count > 0)
+        {
+            foreach (var item in Model.Collectibles)
+            {
+                <div class="collectible-card">
+                    <img src="@item.AssetThumbnailUrl" alt="@item.Name" />
+                    <div class="name">@item.Name</div>
+                    <div class="desc">@item.Description</div>
+                </div>
+            }
+        }
+        else
+        {
+            <div style="color:#1286db; margin-top:18px;">You have no collectibles.</div>
+        }
     </div>
 </div>
