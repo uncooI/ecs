@@ -1,45 +1,38 @@
-@page "/auth/notapproved"
+@page
 @model Roblox.Website.Pages.NotApproved
 
-@{
-    Layout = "Shared/_Layout";
+@section MetaTags {
+    <title>Account Status – Shklurb</title>
 }
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-12 col-lg-6 offset-lg-3">
-            <div class="card card-body">
-                <h3>Account Banned</h3>
-                <p class="mb-0">
-                    @if (Model.ban.expiredAt != null)
-                    {
-                        <span>Your account has been temporarily banned from this website for the following reason:</span>
-                    }
-                    else
-                    {
-                        <span>Your account has been permanently banned from this website for the following reason:</span>
-                    }
-                </p>
-                <div class="alert alert-secondary mt-2 mb-2">
-                    <p class="mb-0">@Model.ban.reason</p>
-                    <p class="mb-0 fst-italic mt-4">Ban created: @Model.ban.createdAt.ToString("f")</p>
-                    @if (Model.ban.expiredAt != null)
-                    {
-                        <p class="mb-0 fst-italic mt-1">Ban expiration: @Model.ban.expiredAt.Value.ToString("f")</p>
-                    }
-                </div>
-                @if (Model.ban.canUnlock)
-                {
-                    <p>You can unlock your account by clicking the button below. Further violations of our rules may lead to account deletion.</p>
-                    <form method="POST">
-                        <input type="submit" name="unlockAccount" value="Unlock Account" class="btn btn-success" />
-                        @Html.AntiForgeryToken()
-                    </form>
-                }
-                else
-                {
-                    <p>If you attempt to create accounts to bypass a ban, we may ban your new accounts at any time.</p>
-                }
-            </div>
-        </div>
-    </div>
+
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Segoe+UI:700,400|Tahoma:700,400');
+    body { background: linear-gradient(135deg, #e2f0ff 0%, #7ad0ff 100%); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+    .aero-logo { margin: 46px auto 12px auto; display: block; width: 230px; max-width: 70vw; filter: drop-shadow(0 8px 18px #88eaff77); border-radius: 24px;}
+    .main-aero-card { background: linear-gradient(120deg, #f7fdff 60%, #8feeff30 100%); border-radius: 22px; box-shadow: 0 10px 44px #6fc6fc22, 0 2px 8px #7cdeff30; padding: 34px 20px 28px 20px; max-width: 410px; width: 95vw; text-align: center; margin: 28px auto 22px auto;}
+    .main-aero-card h2 { font-size: 1.45em; color: #d3303a; margin-bottom: 10px;}
+    .main-aero-card p { color: #af162b; font-size: 1.05em; margin-bottom: 13px;}
+    .ban-detail { background:#fee7ea; color:#be2b44; border-radius:14px; margin: 14px 0 0 0; padding:10px 15px; font-size:1.01em;}
+    .cta-button { font-size: 1em; background: linear-gradient(90deg, #ef818f 10%, #f8b6bc 100%); border: none; color: #fff; padding: 10px 32px; border-radius: 20px; font-weight: bold; margin-top: 18px; cursor: pointer;}
+</style>
+
+<img class="aero-logo" src="/UnsecuredContent/shklurb-logo.png" alt="Shklurb Logo">
+<div class="main-aero-card">
+    <h2>Account Not Approved</h2>
+    @if (Model.ban != null)
+    {
+        <p>Your account is not approved or has been banned.</p>
+        <div class="ban-detail"><b>Reason:</b> @Model.ban.reason</div>
+        @if (Model.ban.canUnlock)
+        {
+            <form method="post">
+                <button class="cta-button" type="submit">Unlock Account</button>
+            </form>
+        }
+    }
+    else
+    {
+        <p>Your account is not approved yet.<br>
+        If you believe this is a mistake, please contact us.</p>
+    }
 </div>
