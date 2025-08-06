@@ -31,6 +31,6 @@
     <form method="post" autocomplete="off">
         <input class="aero-input" type="text" name="username" placeholder="Username" maxlength="21" required value="@Model.username" />
         <input class="aero-input" type="password" name="password" placeholder="Password" maxlength="100" required />
-        <button class="cta-button" type="submit" @(Model.signupDisabled ? "disabled" : "")>Sign Up</button>
+        <button class="cta-button" type="submit" (Model.signupDisabled ? "disabled" : "")>Sign Up</button>
     </form>
 </div>
