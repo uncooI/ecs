@@ -1,163 +1,148 @@
 @page
-@using Roblox.Dto.Users
 @model Roblox.Website.Pages.Auth.Application
 
-@{
-    Layout = "Shared/_Layout";
-}
-
 @section MetaTags {
-    <title>Application</title>
-    <style>
-        .input-padding {
-            margin-top:  2rem;
-            margin-bottom:  2rem;
-        }
-
-        div.application-form-entry h4 {
-            width:  100%;
-            background:  rgb(33, 37, 41);
-            color:  #fff;
-            padding: .5rem 1rem;
-        }
-
-    </style>
+    <title>Apply to Shklurb</title>
+    <meta name="description" content="Join Shklurb — fill out a simple application to keep our community safe and fun!" />
 }
 
-@if (Model.showBannerForOldUsers)
-{
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-12">
-                <div class="alert alert-warning">
-                    <p class="mb-0">You will have to fill out this application and get approved in order for your account to be reactivated. Sorry for the inconvenience.</p>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Segoe+UI:700,400|Tahoma:700,400');
+    body {
+        background: linear-gradient(135deg, #e2f0ff 0%, #7ad0ff 100%);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .aero-logo {
+        margin: 48px auto 18px auto;
+        display: block;
+        width: 300px;
+        max-width: 90vw;
+        filter: drop-shadow(0 8px 28px #72e6fd99);
+        border-radius: 32px;
+        background: rgba(255,255,255,0.15);
+        padding: 14px 30px 10px 30px;
+        box-shadow: 0 2px 28px #5ee0ff66, 0 0 0 4px #a8e6ff99 inset;
+    }
+    .main-aero-card {
+        background: linear-gradient(120deg, #f7fdff 60%, #8feeff30 100%);
+        border-radius: 38px;
+        box-shadow: 0 10px 60px #6fc6fc29, 0 2px 8px #7cdeff30;
+        padding: 38px 30px 32px 30px;
+        max-width: 440px;
+        width: 98vw;
+        text-align: center;
+        margin: 32px auto 32px auto;
+    }
+    .main-aero-card h2 {
+        font-size: 2em;
+        color: #066bb8;
+        margin-bottom: 10px;
+        text-shadow: 0 2px 8px #e8fcff6b;
+    }
+    .main-aero-card p {
+        color: #186b91;
+        font-size: 1.1em;
+        margin-bottom: 22px;
+    }
+    .aero-input, .aero-textarea {
+        width: 90%;
+        margin: 12px auto 16px auto;
+        padding: 12px;
+        border-radius: 18px;
+        border: none;
+        outline: none;
+        font-size: 1em;
+        box-shadow: 0 2px 16px #c9f6ff30;
+        background: linear-gradient(100deg, #eafaff 80%, #c6f4ff 100%);
+        transition: box-shadow 0.16s;
+        display: block;
+    }
+    .aero-textarea { resize: vertical; min-height: 64px; max-height: 260px;}
+    .aero-input:focus, .aero-textarea:focus {
+        box-shadow: 0 4px 24px #30d1ff88;
+    }
+    .cta-button {
+        font-size: 1.13em;
+        background: linear-gradient(90deg, #30d5fc 10%, #5ec5ff 100%);
+        border: none;
+        color: #fff;
+        padding: 14px 40px;
+        border-radius: 22px;
+        font-weight: bold;
+        box-shadow: 0 8px 36px #00bcf855, 0 0 0 4px #c2f2f3aa inset;
+        cursor: pointer;
+        letter-spacing: 0.04em;
+        text-shadow: 0 2px 8px #fff9;
+        margin-top: 14px;
+        transition: background 0.22s, box-shadow 0.17s;
+    }
+    .cta-button:disabled {
+        background: #c2ebfd;
+        color: #a5a5a5;
+        cursor: not-allowed;
+    }
+    .aero-error {
+        color: #f2406e;
+        background: #fff4f7;
+        padding: 8px 18px;
+        border-radius: 16px;
+        margin-bottom: 16px;
+        box-shadow: 0 2px 12px #ff95bc22;
+        font-weight: bold;
+    }
+    .aero-success {
+        color: #1f7c3a;
+        background: #f2fff6;
+        padding: 8px 18px;
+        border-radius: 16px;
+        margin-bottom: 16px;
+        box-shadow: 0 2px 12px #85ffbc22;
+        font-weight: bold;
+    }
+</style>
+
+<img class="aero-logo" src="/UnsecuredContent/shklurb-logo.png" alt="Shklurb Logo">
+
+<div class="main-aero-card">
+    <h2>Apply to Join Shklurb</h2>
+    <p>
+        To keep our community safe and high-quality, please fill out this short application.<br>
+        <strong>No personal info required!</strong>
+    </p>
+    @if (Model.errorMessage != null)
+    {
+        <div class="aero-error">@Model.errorMessage</div>
+    }
+    @if (Model.successMessage != null)
+    {
+        <div class="aero-success">@Model.successMessage</div>
+    }
+    @if (!Model.submitDisabled && Model.successMessage == null)
+    {
+        <form method="post" autocomplete="off">
+            <label for="about">Why do you want to join?</label>
+            <textarea id="about" name="about" class="aero-textarea" maxlength="4000" required>@Model.about</textarea>
+            <label for="socialUrl">Social Media Link (for verification)</label>
+            <input id="socialUrl" name="socialUrl" class="aero-input" type="url" maxlength="128" placeholder="https://twitter.com/yourprofile" value="@Model.socialUrl" required />
+            @if (Model.verificationPhrase != null)
+            {
+                <div style="background:#e9f8ff;border-radius:13px;padding:6px 15px;margin:14px auto 10px auto;width:90%;">
+                    <b>Verification Phrase:</b>
+                    <span style="font-family:monospace;color:#1686ce">@Model.verificationPhrase</span>
+                    <div style="font-size:0.98em;color:#888;">Paste this in your bio/about section of your social profile.</div>
                 </div>
+            }
+            <div style="margin:14px auto;">
+                <div class="h-captcha" data-sitekey="@Model.siteKey"></div>
             </div>
+            <button class="cta-button" type="submit" @(Model.submitDisabled ? "disabled" : "")>Submit Application</button>
+        </form>
+    }
+    @if (Model.submitDisabled)
+    {
+        <div class="aero-error">
+            Application submissions are currently disabled. Try again later!
         </div>
-    </div>
-}
-
-
-<div class="container mt-4 mb-4">
-    <div class="row">
-        <div class="col-12 col-xl-6 offset-xl-3 col-md-8 offset-md-2">
-            <div class="card card-body">
-                @if (Model.errorMessage != null)
-                {
-                    <div class="alert alert-danger">
-                        @Model.errorMessage
-                    </div>
-                }
-                         
-                <h3>Application</h3>
-                <p>To join this website, you must fill out an application. This is done to prevent bots and malicious users from joining.</p>
-
-                @if (Model.application == null)
-                {
-                    <p class="mb-0"><span class="fw-bold">Already filled out the application?</span> Click <a href="/auth/application-check">here</a> to view its status.</p>
-                }
-
-                @if (Model.successMessage != null)
-                {
-                    <p class="text-success">@Model.successMessage</p>
-                }
-
-                @if (Model.application != null)
-                {
-                    <hr/>
-                    <p class="mt-4 mb-0">You submitted an application on @Model.application.createdAt.ToString("f") UTC.</p>
-                    <p class="mt-3 mb-0">Application Status: <span class="fw-bolder">@(Model.displayStatus)</span></p>
-                    @if (Model.application.status == UserApplicationStatus.Approved)
-                    {
-                        <p>Join URL: <a href="/auth/signup?applicationId=@Model.application.joinId">https://example.com/auth/signup?applicationId=@Model.application.joinId</a></p>
-                    }
-                    @if (Model.application.status == UserApplicationStatus.Rejected)
-                    {
-                        <p>Rejection Reason: @(Model.application.rejectionReason ?? "No reason specified.")</p>
-                        <form method="post">
-                            <input type="hidden" name="deleteCurrentApplicationCookie" value="true"/>
-                            @Html.AntiForgeryToken()
-                            <input type="submit" class="btn btn-outline-primary" value="Create New Application"/>
-                        </form>
-                    }
-                    <p class="mt-4">Application ID: @Model.application.id</p>
-                }
-                else
-                {
-                    <form method="post">
-                        <div class="input-padding"></div>
-                        
-                        <div>
-                            <h4>Requirements</h4>
-                            <ul>
-                                <li>You must be 13 years of age or older</li>
-                                <li>You must have an active account on a public website such as Roblox or Twitter.</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="input-padding"></div>
-                        
-
-                        <div class="application-form-entry">
-                            <div class="stage-1">
-                                <h4>Step 1 - About Me</h4>
-                                <div class="p-2">
-                                    <p class="mb-1">You can list some interests, favorite video games, why you want to join, things you can create (e.g. clothing or games), etc. A sentence or two is fine. <span class="fw-bolder">Do <span class="text-decoration-underline">NOT</span> put personal information such as your age or email address</span>.</p>
-                                    <textarea placeholder="About me (up to 4,000 characters)" disabled="@Model.submitDisabled" class="form-control w-100" rows="4" name="about" maxlength="4096">@Model.about</textarea>
-                                </div>
-                            </div>
-                            
-                            <div class="input-padding"></div>
-                            
-                            <div class="stage-2">
-                                <h4>Step 2 - Social URL</h4>
-                                <div class="p-2">
-                                    <p class="mb-0">Paste a link to your profile on a public website. Examples include a Roblox profile, a Twitter account, a v3rmillion account, a Reddit account, etc.</p>
-                                    <p class="mb-2 mt-2"><span class="fw-bold">Your account must have some activity on it</span>, such as friends/followers, posts, games, or whatever constitutes activity on the site your are linking.</p>
-                                    <input placeholder="Social Media Profile URL" value="@Model.socialUrl" disabled="@Model.submitDisabled" type="text" class="form-control" name="socialUrl" maxlength="128"/>
-                                </div>
-                            </div>
-                            
-                            <div class="input-padding"></div>
-                            
-                            <div class="stage-3">
-                                <h4>Step 3 - Verification</h4>
-                                <div class="p-2">
-                                    <p class="mb-0">Copy the entire phrase in the blue box below and paste it into the about section of your social media profile. This is done so that we can verify you aren't impersonating someone.</p>
-                                    <div class="alert alert-primary mt-2 mb-2">
-                                        <p class="mb-0">@Model.verificationPhrase</p>
-                                    </div>
-                                    
-                                    <div class="mt-2">
-                                        <label>Code not working or getting filtered? </label>
-                                        <input type="submit" class="btn btn-outline-primary btn-sm" name="action" value="Get New Code"/>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="input-padding"></div>
-                            
-                            
-                            <div class="stage-4">
-                                <h4>Step 4 - Captcha</h4>
-                                <div class="p-2">
-                                    <p class="mb-0">We just have to make sure you aren't a robot.</p>
-                                    <div class="h-captcha mt-4" data-sitekey="@Model.siteKey" data-theme="light"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="stage-submit">
-                            <div class="input-padding"></div>
-                            <input type="submit" class="btn btn-primary mt-2" value="Submit Application"/>
-                            @Html.AntiForgeryToken()
-                        </div>
-                        
-                    </form>
-                }
-            </div>
-        </div>
-    </div>
+    }
 </div>
-
-<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+<script src="https://hcaptcha.com/1/api.js" async defer></script>
